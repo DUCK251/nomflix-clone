@@ -12,7 +12,7 @@ import Search from "Routes/Search";
 import Detail from "Routes/Detail";
 
 export default () => (
-  <Router>
+  <Router forceRefresh>
     <>
       <Header />
       <Switch>

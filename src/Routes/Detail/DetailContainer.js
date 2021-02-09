@@ -23,6 +23,12 @@ export default class DetailContainer extends React.Component {
       },
       history: { push }
     } = this.props;
+    
+    // reload when url change 
+    window.addEventListener('popstate', function (event) {
+      window.location.reload();
+    });
+
     const { isMovie } = this.state;
     const parsedId = parseInt(id);
     if (isNaN(parsedId)) {
