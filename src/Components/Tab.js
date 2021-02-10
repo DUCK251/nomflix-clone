@@ -8,10 +8,8 @@ import PhotoTab from "./TabComponents/PhotoTab";
 import ReviewTab from "./TabComponents/ReviewTab";
 import PeopleTab from "./TabComponents/PeopleTab";
 import RecommendTab from "./TabComponents/RecommendTab";
-import "../flickity.css";
 
-const Container = styled.div`
-`;
+const Container = styled.div``;
 
 const Tabs = styled.div`
   display: flex;
