@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { faImdb } from "@fortawesome/free-brands-svg-icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Helmet from "react-helmet";
 import Loader from "../../Components/Loader";
@@ -77,8 +78,6 @@ const Overview = styled.p`
   width: 100%;
 `;
 
-const ImdbLink = styled.a``;
-
 const TabContainer = styled.div`
   margin-top: 20px;
   z-index: 1;
@@ -150,9 +149,17 @@ const DetailPresenter = ({ result, loading, error, isMovie }) =>
             {result.imdb_id &&
             <>
               <Divider>•</Divider>
-              <ImdbLink href={`https://www.imdb.com/title/${result.imdb_id}/`} >
-                <FontAwesomeIcon icon={faImdb} size="3x" color={"#F5C518"}/>
-              </ImdbLink>
+              <a href={`https://www.imdb.com/title/${result.imdb_id}/`} >
+                <FontAwesomeIcon icon={faImdb} size="2x" color={"#F5C518"}/>
+              </a>
+            </>
+            }
+            {result.homepage &&
+            <>
+              <Divider>•</Divider>
+              <a href={result.homepage}>
+                <FontAwesomeIcon icon={faHome} size="2x" color={"white"}/>
+              </a>
             </>
             }
           </ItemContainer>
