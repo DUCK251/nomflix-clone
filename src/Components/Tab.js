@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
-import Poster from "./Poster";
 import VideoTab from "./TabComponents/VideoTab";
 import CompanyTab from "./TabComponents/CompanyTab";
 import CountryTab from "./TabComponents/CountryTab";
@@ -38,8 +36,6 @@ const TabButton = styled.button`
   }
 `;
 
-const Link = styled.a``;
-
 const Content = styled.div``;
 
 const Tab = ({
@@ -53,77 +49,52 @@ const Tab = ({
     review,
     recommend
   }) => {
-  const [isCast, setIsCast] = useState(true);
-  const [isCrew, setIsCrew] = useState(false);
-  const [isPhoto, setIsPhoto] = useState(false);
-  const [isVideo, setIsVideo] = useState(false);
-  const [isCompany, setIsCompany] = useState(false);
-  const [isCountry, setIsCountry] = useState(false);
-  const [isReview, setIsReview] = useState(false);
-  const [isRecommend, setIsRecommend] = useState(false);
-
-  const tabSelect = (func) => {
-    const taps = [
-      setIsCast, 
-      setIsVideo, 
-      setIsCompany, 
-      setIsCountry,
-      setIsCrew,
-      setIsPhoto,
-      setIsReview,
-      setIsRecommend
-    ]
-    taps.map((f) => {
-      if (f === func) {
-        return f(true);
-      } else {
-        return f(false);
-      }
-    })
-  }
-
-  const onClick = (e) => {
-    const flag = e.target.innerText;
-    if (flag === "Company") {
-      tabSelect(setIsCompany);
-    } else if (flag === "Country") {
-      tabSelect(setIsCountry);
-    } else if (flag === "Video") {
-      tabSelect(setIsVideo);
-    } else if (flag === "Cast") {
-      tabSelect(setIsCast);
-    } else if (flag === "Crew") {
-      tabSelect(setIsCrew);
-    } else if (flag === "Photo") {
-      tabSelect(setIsPhoto);
-    } else if (flag === "Review") {
-      tabSelect(setIsReview);
-    } else if (flag === "Recommend") {
-      tabSelect(setIsRecommend);
-    }
-  }
+  const [tabIdx, setTabIdx] = useState(0);
+  
+  const contents = [
+    {
+      tab: "Cast",
+      content: <PeopleTab people={cast}/>
+    },
+    {
+      tab: "Crew",
+      content: <PeopleTab people={crew}/>
+    },
+    {
+      tab: "Photo",
+      content: <PhotoTab photo={photo}/>
+    },
+    {
+      tab: "Video",
+      content: <VideoTab video={video}/>
+    },
+    {
+      tab: "Company",
+      content: <CompanyTab company={company}/>
+    },
+    {
+      tab: "Country",
+      content: <CountryTab country={country}/>
+    },
+    {
+      tab: "Review",
+      content: <ReviewTab review={review}/>
+    },
+    {
+      tab: "Recommend",
+      content: <RecommendTab recommend={recommend} isMovie={isMovie}/>
+    },
+  ]
 
   return (
   <Container>
     <Tabs>
-      <TabButton select={isCast} onClick={ (e) => onClick(e) }>Cast</TabButton>
-      <TabButton select={isCrew} onClick={ (e) => onClick(e) }>Crew</TabButton>
-      <TabButton select={isPhoto} onClick={ (e) => onClick(e) }>Photo</TabButton>
-      <TabButton select={isVideo} onClick={ (e) => onClick(e) }>Video</TabButton>
-      <TabButton select={isCompany} onClick={ (e) => onClick(e) }>Company</TabButton>
-      <TabButton select={isCountry} onClick={ (e) => onClick(e) }>Country</TabButton>
-      <TabButton select={isReview} onClick={ (e) => onClick(e) }>Review</TabButton>
-      <TabButton select={isRecommend} onClick={ (e) => onClick(e) }>Recommend</TabButton>
+      {contents.map((section, idx) =>
+        <TabButton select={idx === tabIdx} onClick={() => setTabIdx(idx)}>{section.tab}</TabButton>
+      )}
     </Tabs>
     <Content>
-      {isCast && <PeopleTab people={cast}/>}
-      {isCrew && <PeopleTab people={crew}/>}
-      {isPhoto && <PhotoTab photo={photo}/>}
-      {isVideo && <VideoTab video={video}/>}
-      {isCompany && <CompanyTab company={company}/>}
-      {isCountry && <CountryTab country={country}/>}
-      {isReview && <ReviewTab review={review}/>}
-      {isRecommend && <RecommendTab recommend={recommend} isMovie={isMovie}/>}
+      {contents[tabIdx].content}
     </Content>
   </Container>
 )};

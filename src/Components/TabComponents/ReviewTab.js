@@ -37,16 +37,19 @@ const ReviewTab = ({ review }) => {
 
   return (
     <>
-    <Container>
-      {review[reviewIdx] && review[reviewIdx].map(review => (
-        <Review
-          name={review.author}
-          rate={review.author_details.rating}
-          content={review.content}
-          url={review.url}
-        />
-      ))}
-    </Container>
+    {review[reviewIdx] ? 
+      <Container>
+        {review[reviewIdx].map(review => (
+          <Review
+            name={review.author}
+            rate={review.author_details.rating}
+            content={review.content}
+            url={review.url}
+          />
+        ))}
+      </Container>
+      : <span>No review</span>
+    }
     <div>
       {review.map((_, idx) => <TabButton select={reviewIdx === idx} onClick={(e) => selectReview(e)}>{idx+1}</TabButton>)}
     </div>
