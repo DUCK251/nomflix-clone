@@ -88,7 +88,12 @@ const Tab = ({
   <Container>
     <Tabs>
       {contents.map((section, idx) =>
-        <TabButton select={idx === tabIdx} onClick={() => setTabIdx(idx)}>{section.tab}</TabButton>
+        <TabButton 
+          select={idx === tabIdx} 
+          onClick={() => setTabIdx(idx)}
+        >
+          {section.tab}
+        </TabButton>
       )}
     </Tabs>
     <Content>
