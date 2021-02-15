@@ -67,6 +67,7 @@ const Collection = () => {
       setLoading(false);
     }
     FetchData();
+    // eslint-disable-next-line
   }, []);
 
   return (
