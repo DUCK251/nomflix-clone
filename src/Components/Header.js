@@ -12,7 +12,7 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   background-color: rgba(20, 20, 20, 0.8);
-  z-index: 10;
+  z-index: 1;
   box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.8);
 `;
 
@@ -47,6 +47,9 @@ export default withRouter(({ location: { pathname } }) => (
       </Item>
       <Item current={pathname === "/search"}>
         <SLink to="/search">Search</SLink>
+      </Item>
+      <Item current={pathname === "/favs"}>
+        <SLink to="/favs">Favs</SLink>
       </Item>
     </List>
   </Header>

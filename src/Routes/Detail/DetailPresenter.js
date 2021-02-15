@@ -1,8 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faImdb } from "@fortawesome/free-brands-svg-icons";
-import { faHome } from "@fortawesome/free-solid-svg-icons"
+import { faHeart as sFaHeart, faHome, faClone } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Helmet from "react-helmet";
 import Loader from "../../Components/Loader";
@@ -13,6 +15,7 @@ const Container = styled.div`
   width: 100%;
   position: relative;
   padding: 50px;
+  margin: 0px auto;
 `;
 
 const Backdrop = styled.div`
@@ -49,7 +52,7 @@ const Cover = styled.div`
 const Data = styled.div`
   width: 70%;
   margin-left: 40px;
-  max-width: 750px;
+  max-width: 800px;
 `;
 
 const Title = styled.h3`
@@ -73,14 +76,12 @@ const Divider = styled.span`
 
 const Overview = styled.p`
   font-size: 12px;
-  opacity: 0.7;
   line-height: 1.5;
   width: 100%;
 `;
 
 const TabContainer = styled.div`
   margin-top: 20px;
-  z-index: 1;
 `;
 
 const Rate = styled.div`
@@ -88,7 +89,11 @@ const Rate = styled.div`
   margin-top: 0.3rem;
 `;
 
-const DetailPresenter = ({ result, loading, error, isMovie }) =>
+const Icon =styled(FontAwesomeIcon)`
+  cursor: pointer;
+`;
+
+const DetailPresenter = ({ result, loading, error, isMovie, isFav, toggleFav }) =>
   loading ? (
     <>
       <Helmet>
@@ -100,7 +105,7 @@ const DetailPresenter = ({ result, loading, error, isMovie }) =>
     <Container>
       <Helmet>
         <title>
-          {result.original_title ? result.original_title : result.original_name}{" "}
+          {result.original_title ? `${result.original_title}` : `${result.original_name}`}{" "}
           | Nomflix
         </title>
       </Helmet>
@@ -130,12 +135,12 @@ const DetailPresenter = ({ result, loading, error, isMovie }) =>
           <ItemContainer>
             <Item>
               {result.release_date
-                ? result.release_date.substring(0, 4)
-                : result.first_air_date.substring(0, 4)}
+                ? result.release_date?.substring(0, 4)
+                : result.first_air_date?.substring(0, 4)}
             </Item>
             <Divider>•</Divider>
             <Item>
-              {result.runtime ? result.runtime : result.episode_run_time[0]} min
+              {result.runtime ? result.runtime : (result.episode_run_time && result.episode_run_time[0])} min
             </Item>
             <Divider>•</Divider>
             <Item>
@@ -146,11 +151,19 @@ const DetailPresenter = ({ result, loading, error, isMovie }) =>
                     : `${genre.name} / `
                 )}
             </Item>
+            {result.belongs_to_collection &&
+            <>
+              <Divider>•</Divider>
+              <Link to={`/collection/${result.belongs_to_collection.id}`}>
+                <FontAwesomeIcon icon={faClone} size="2x" color={"white"}/>
+              </Link>
+            </>
+            }
             {result.imdb_id &&
             <>
               <Divider>•</Divider>
               <a href={`https://www.imdb.com/title/${result.imdb_id}/`} >
-                <FontAwesomeIcon icon={faImdb} size="2x" color={"#F5C518"}/>
+                <FontAwesomeIcon icon={faImdb} size="2x" color={"white"}/>
               </a>
             </>
             }
@@ -162,6 +175,12 @@ const DetailPresenter = ({ result, loading, error, isMovie }) =>
               </a>
             </>
             }
+            <>
+              <Divider>•</Divider>
+              {isFav ? 
+                <Icon onClick={toggleFav} icon={sFaHeart} size="2x" color={"white"}/>: 
+                <Icon onClick={toggleFav} icon={faHeart} size="2x" color={"white"}/>}
+            </>
           </ItemContainer>
           <Overview>{result.overview}</Overview>
           <TabContainer>
@@ -169,11 +188,12 @@ const DetailPresenter = ({ result, loading, error, isMovie }) =>
               cast={result.cast}
               crew={result.crew}
               photo={result.photo}
-              video={result.videos.results} 
+              video={result.videos?.results} 
               country={result.production_countries}
               company={result.production_companies}
               review={result.review}
               recommend={result.recommend}
+              seasons={result.seasons}
               isMovie={isMovie}
             />
           </TabContainer>

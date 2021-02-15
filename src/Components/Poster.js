@@ -17,15 +17,16 @@ const Image = styled.div`
 `;
 
 const Rating = styled.span`
+  position: absolute;
   bottom: 5px;
   right: 5px;
-  position: absolute;
+  font-size: 16px;
   opacity: 0;
   transition: opacity 0.1s linear;
 `;
 
 const ImageContainer = styled.div`
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   position: relative;
   &:hover {
     ${Image} {

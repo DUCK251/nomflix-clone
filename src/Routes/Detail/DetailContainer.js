@@ -1,6 +1,7 @@
 import React from "react";
 import DetailPresenter from "./DetailPresenter";
 import { moviesApi, tvApi } from "../../api";
+import { paginateArray } from "../../utils";
 
 export default class DetailContainer extends React.Component {
   constructor(props) {
@@ -12,8 +13,28 @@ export default class DetailContainer extends React.Component {
       result: null,
       error: null,
       loading: true,
-      isMovie: pathname.includes("/movie/")
+      isMovie: pathname.includes("/movie/"),
+      isFav: false
     };
+  }
+
+  toggleFav() {
+    const {
+      match: {
+        params: { id }
+      }
+    } = this.props;
+    const value = this.state.isMovie ? `m${id}` : `t${id}`;
+    let Favs = localStorage.getItem("Favs");
+    Favs = Favs ? Favs.split(',') : [];
+    const isFav = Favs.findIndex((movieId) => movieId === value) !== -1
+    if(isFav) {
+      Favs = Favs.filter(Fav => Fav !== value);
+    } else {
+      Favs.push(value);
+    }
+    localStorage.setItem("Favs", Favs.toString());
+    this.setState({isFav: !isFav});
   }
 
   async componentDidMount() {
@@ -59,30 +80,36 @@ export default class DetailContainer extends React.Component {
     } finally {
       crew = crew.slice(0,10);
       cast = cast.slice(0,10);
-      // paginate recommend by 10
-      let idx = 0;
-      let temp = []
-      while (idx < recommend.length) {
-        temp.push(recommend.slice(idx,idx+10));
-        idx += 10;
+      recommend = paginateArray(recommend, 10);
+      review = paginateArray(review, 5);
+      // Check Fav
+      let Favs = localStorage.getItem("Favs");
+      Favs = Favs ? Favs.split(',') : [];
+      let isFav = false;
+      if(this.state.isMovie) {
+        isFav = Favs.findIndex((Fav) => Fav === `m${id}`) !== -1
+      } else {
+        isFav = Favs.findIndex((Fav) => Fav === `t${id}`) !== -1
       }
-      recommend = temp;
-      temp = []; 
-      idx = 0;
-      while (idx < review.length) {
-        temp.push(review.slice(idx, idx+5));
-        idx += 5;
-      }
-      review = temp;
       // combine all results
       result = {...result, cast, crew, photo, review, recommend };
+      if(result.id === undefined) {
+        return push("/");
+      }
       console.log(result);
-      this.setState({ loading: false, result });
+      this.setState({ loading: false, result, isFav });
     }
   }
 
   render() {
-    const { result, error, loading, isMovie } = this.state;
-    return <DetailPresenter result={result} error={error} loading={loading} isMovie={isMovie}/>;
+    const { result, error, loading, isMovie, isFav } = this.state;
+    return <DetailPresenter
+              result={result}
+              error={error}
+              loading={loading}
+              isMovie={isMovie}
+              isFav={isFav}
+              toggleFav={this.toggleFav.bind(this)}
+            />;
   }
 }

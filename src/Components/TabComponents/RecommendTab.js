@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
 import PropTypes from "prop-types";
 import styled from 'styled-components';
 import Poster from '../Poster';
@@ -7,7 +6,7 @@ import Poster from '../Poster';
 const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 125px);
-  grid-gap: calc((100% - 625px)/4);
+  grid-gap: 25px calc((100% - 625px)/4);
   margin-top: 20px;
   margin-bottom: 20px;
 `;
@@ -32,14 +31,6 @@ const TabButton = styled.button`
 const RecommendTab = ({ recommend, isMovie }) => {
   const [recommendIdx, setRecommendIdx] = useState(0);
 
-  // let history = useHistory();
-
-  // const handleRoute = (id) => {
-  //   history.push(isMovie ? `/movie/${id}` : `/show/${id}`);
-  //   console.log(history);
-  //   window.location.reload()
-  // }
-
   const selectRecommend = (e) => {
     const idx = e.target.innerText;
     setRecommendIdx(idx-1);
@@ -48,7 +39,7 @@ const RecommendTab = ({ recommend, isMovie }) => {
   return (
     <>
     <Container>
-      {recommend[recommendIdx] && recommend[recommendIdx].map(movie => (
+      {isMovie && recommend[recommendIdx] && recommend[recommendIdx].map(movie => (
         <Poster
           key={movie.id}
           id={movie.id}
@@ -56,6 +47,17 @@ const RecommendTab = ({ recommend, isMovie }) => {
           title={movie.original_title}
           rating={movie.vote_average}
           year={movie.release_date ? movie.release_date.substring(0, 4) : ""}
+          isMovie={isMovie}
+        />
+      ))}
+      {!isMovie && recommend[recommendIdx] && recommend[recommendIdx].map(show => (
+        <Poster
+          key={show.id}
+          id={show.id}
+          imageUrl={show.poster_path}
+          title={show.name}
+          rating={show.vote_average}
+          year={show.first_air_date ? show.first_air_date.substring(0, 4) : ""}
           isMovie={isMovie}
         />
       ))}

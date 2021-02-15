@@ -11,17 +11,18 @@ const api = axios.create({
 export const moviesApi = {
   nowPlaying: () => api.get("movie/now_playing"),
   upcoming: () => api.get("movie/upcoming"),
-  popular: () => api.get("movie/popular"),
+  popular: (page = 1) => api.get(`movie/popular?page=${page}`),
   movieDetail: id =>
     api.get(`movie/${id}`, {
       params: {
         append_to_response: "videos"
       }
     }),
-  search: term =>
+  search: (term, page = 1) =>
     api.get("search/movie", {
       params: {
-        query: encodeURIComponent(term)
+        query: encodeURIComponent(term),
+        page
       }
     }),
   cast: id => api.get(`movie/${id}/credits`),
@@ -32,11 +33,12 @@ export const moviesApi = {
   }),
   review: id => api.get(`movie/${id}/reviews`),
   recommend: id => api.get(`movie/${id}/recommendations`),
+  collection: collection_id => api.get(`collection/${collection_id}`),
 };
 
 export const tvApi = {
   topRated: () => api.get("tv/top_rated"),
-  popular: () => api.get("tv/popular"),
+  popular: (page = 1) => api.get(`tv/popular?page=${page}`),
   airingToday: () => api.get("tv/airing_today"),
   showDetail: id =>
     api.get(`tv/${id}`, {
@@ -44,10 +46,11 @@ export const tvApi = {
         append_to_response: "videos"
       }
     }),
-  search: term =>
+  search: (term, page = 1) =>
     api.get("search/tv", {
       params: {
-        query: encodeURIComponent(term)
+        query: encodeURIComponent(term),
+        page
       }
     }),
   cast: id => api.get(`tv/${id}/credits`),
@@ -58,4 +61,5 @@ export const tvApi = {
   }),
   review: id => api.get(`tv/${id}/reviews`),
   recommend: id => api.get(`tv/${id}/recommendations`),
+  season: (tv_id, season_number) => api.get(`/tv/${tv_id}/season/${season_number}`),
 };

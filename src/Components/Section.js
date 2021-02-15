@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Container = styled.div`
-  :not(:last-child) {
-    margin-bottom: 50px;
-  }
+  max-width: 1500px;
+  margin: 0 auto;
+  margin-bottom: 50px;
 `;
 
 const Title = styled.span`
@@ -16,16 +16,18 @@ const Title = styled.span`
 const Grid = styled.div`
   margin-top: 25px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 125px);
-  grid-gap: 25px;
+  grid-template-columns: repeat(10, 125px);
+  grid-gap: 25px calc((100% - 1250px)/9);
 `;
 
-const Section = ({ title, children }) => (
-  <Container>
-    <Title>{title}</Title>
-    <Grid>{children}</Grid>
-  </Container>
-);
+const Section = ({ title, children }) => {
+  return (
+    <Container>
+      <Title>{title}</Title>
+      <Grid>{children}</Grid>
+    </Container>
+  );
+};
 
 Section.propTypes = {
   title: PropTypes.string.isRequired,

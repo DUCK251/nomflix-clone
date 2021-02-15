@@ -2,11 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const Container = styled.div`
-  :not(:last-child) {
-    margin-bottom: 10px;
-  }
-`;
+const Container = styled.div``;
 
 const Name = styled.div`
   display: flex;
@@ -54,3 +50,9 @@ const Person = ({ name, description, imgURL }) => {
 };
 
 export default Person;
+
+Person.propTypes = {
+  name: PropTypes.string,
+  description: PropTypes.string,
+  imgURL: PropTypes.string
+}

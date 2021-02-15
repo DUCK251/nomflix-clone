@@ -18,6 +18,11 @@ const SFlickity = styled(Flickity)`
   width: 100%;
 `;
 
+const Img = styled.img`
+  width: 800px;
+  height: auto;
+`;
+
 const PhotoTab = ({ photo }) => {
   return (
     <Container>
@@ -31,7 +36,7 @@ const PhotoTab = ({ photo }) => {
             static
           >
           {photo && photo.map(photo => (
-            <img src={`https://image.tmdb.org/t/p/w500${photo.file_path}`} alt="backdrops"></img>
+            <Img src={`https://image.tmdb.org/t/p/w500${photo.file_path}`} alt="backdrops"></Img>
           ))}
         </SFlickity>
       }
@@ -43,7 +48,7 @@ PhotoTab.propTypes = {
   photo: PropTypes.arrayOf(
     PropTypes.shape({
       file_path: PropTypes.string.isRequired
-    })
+    }).isRequired
   ).isRequired
 };
 

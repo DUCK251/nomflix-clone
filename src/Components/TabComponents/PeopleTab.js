@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import Person from '../Person';
 
 const Container = styled.div`
+  margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(5, 125px);
-  grid-gap: calc((100% - 625px)/4);
-  margin-top: 20px;
+  grid-gap: 25px calc((100% - 625px)/4);
 `;
 
 const PeopleTab = ({ people }) => {

@@ -44,27 +44,22 @@ const ReviewTab = ({ review }) => {
             name={review.author}
             rate={review.author_details.rating}
             content={review.content}
-            url={review.url}
           />
         ))}
       </Container>
       : <span>No review</span>
     }
     <div>
-      {review.map((_, idx) => <TabButton select={reviewIdx === idx} onClick={(e) => selectReview(e)}>{idx+1}</TabButton>)}
+      {review.map((_, idx) => 
+        <TabButton select={reviewIdx === idx} onClick={(e) => selectReview(e)}>{idx+1}</TabButton>
+      )}
     </div>
     </>
   );
 };
 
 ReviewTab.propTypes = {
-  review: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      character: PropTypes.string.isRequired,
-      profile_path: PropTypes.string.isRequired,
-    })
-  ).isRequired
+  review: PropTypes.array,
 };
 
 export default ReviewTab;

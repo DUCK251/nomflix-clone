@@ -15,8 +15,10 @@ const Img = styled.img`
   height: 200px;
 `;
 
-export default () => (
+const Loader = () => (
   <Container>
     <Img src="/loading.gif"></Img>
   </Container>
 );
+
+export default Loader;

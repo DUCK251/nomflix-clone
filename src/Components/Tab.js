@@ -8,6 +8,7 @@ import PhotoTab from "./TabComponents/PhotoTab";
 import ReviewTab from "./TabComponents/ReviewTab";
 import PeopleTab from "./TabComponents/PeopleTab";
 import RecommendTab from "./TabComponents/RecommendTab";
+import SeasonsTab from "./TabComponents/SeasonsTab";
 
 const Container = styled.div``;
 
@@ -45,7 +46,8 @@ const Tab = ({
     company,
     country,
     review,
-    recommend
+    recommend,
+    seasons
   }) => {
   const [tabIdx, setTabIdx] = useState(0);
   
@@ -84,6 +86,13 @@ const Tab = ({
     },
   ]
 
+  if (seasons) {
+    contents.push({
+      tab: "Seasons",
+      content: <SeasonsTab seasons={seasons}/>
+    })
+  }
+
   return (
   <Container>
     <Tabs>
@@ -108,7 +117,8 @@ Tab.propTypes = {
   company: PropTypes.array,
   country: PropTypes.array,
   review: PropTypes.array,
-  recommend: PropTypes.array
+  recommend: PropTypes.array,
+  seasons: PropTypes.array,
 };
 
 export default Tab;
