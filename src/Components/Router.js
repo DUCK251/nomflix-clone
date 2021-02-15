@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  BrowserRouter,
+  HashRouter,
   Route,
   Redirect,
   Switch
@@ -14,7 +14,7 @@ import Detail from "Routes/Detail";
 import Collection from "Routes/Collection";
 
 const Router = () => (
-  <BrowserRouter forceRefresh>
+  <HashRouter forceRefresh>
     <>
       <Header />
       <Switch>
@@ -28,7 +28,7 @@ const Router = () => (
         <Redirect from="*" to="/" />
       </Switch>
     </>
-  </BrowserRouter>
+  </HashRouter>
 );
 
 export default Router;
