@@ -144,12 +144,18 @@ const DetailPresenter = ({ result, loading, error, isMovie, isFav, toggleFav }) 
             </Item>
             <Divider>•</Divider>
             <Item>
-              {result.genres &&
+              {isMovie && result.genres &&
                 result.genres.map((genre, index) =>
                   index === result.genres.length - 1
-                    ? genre.name
-                    : `${genre.name} / `
-                )}
+                    ? <Link to={`/movie/genre/${genre.id}`}>{genre.name}</Link>
+                    : <Link to={`/movie/genre/${genre.id}`}>{`${genre.name} / `}</Link>
+              )}
+              {!isMovie && result.genres &&
+                result.genres.map((genre, index) =>
+                  index === result.genres.length - 1
+                    ? <Link to={`/tv/genre/${genre.id}`}>{genre.name}</Link>
+                    : <Link to={`/tv/genre/${genre.id}`}>{`${genre.name} / `}</Link>
+              )}
             </Item>
             {result.belongs_to_collection &&
             <>

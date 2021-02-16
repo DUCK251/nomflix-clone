@@ -34,6 +34,8 @@ export const moviesApi = {
   review: id => api.get(`movie/${id}/reviews`),
   recommend: id => api.get(`movie/${id}/recommendations`),
   collection: collection_id => api.get(`collection/${collection_id}`),
+  discover: query => api.get(`discover/movie?${query}`),
+  genres: () => api.get("/genre/movie/list"),
 };
 
 export const tvApi = {
@@ -62,4 +64,6 @@ export const tvApi = {
   review: id => api.get(`tv/${id}/reviews`),
   recommend: id => api.get(`tv/${id}/recommendations`),
   season: (tv_id, season_number) => api.get(`/tv/${tv_id}/season/${season_number}`),
+  discover: query => api.get(`discover/tv?${query}`),
+  genres: () => api.get("/genre/tv/list"),
 };

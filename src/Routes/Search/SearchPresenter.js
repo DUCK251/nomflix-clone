@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
@@ -57,6 +58,64 @@ const TabButton = styled.button`
   }
 `;
 
+const GenreContainer = styled.div`
+  max-width: 700px;
+  margin: 0px auto;
+`;
+
+const Button = styled.button`
+  margin: 0.3rem;
+  background-color: #3498db;
+  border: none;
+  border-radius: 5px;
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  cursor: pointer;
+`;
+
+const tvGenres = [
+  {id: 10759, name: "Action & Adventure"},
+  {id: 16, name: "Animation"},
+  {id: 35, name: "Comedy"},
+  {id: 80, name: "Crime"},
+  {id: 99, name: "Documentary"},
+  {id: 18, name: "Drama"},
+  {id: 10751, name: "Family"},
+  {id: 10762, name: "Kids"},
+  {id: 9648, name: "Mystery"},
+  {id: 10763, name: "News"},
+  {id: 10764, name: "Reality"},
+  {id: 10765, name: "Sci-Fi & Fantasy"},
+  {id: 10766, name: "Soap"},
+  {id: 10767, name: "Talk"},
+  {id: 10768, name: "War & Politics"},
+  {id: 37, name: "Western"},
+]
+
+const movieGenres = [
+  {id: 28, name: "Action"},
+  {id: 12, name: "Adventure"},
+  {id: 16, name: "Animation"},
+  {id: 35, name: "Comedy"},
+  {id: 80, name: "Crime"},
+  {id: 99, name: "Documentary"},
+  {id: 18, name: "Drama"},
+  {id: 10751, name: "Family"},
+  {id: 14, name: "Fantasy"},
+  {id: 36, name: "History"},
+  {id: 27, name: "Horror"},
+  {id: 10402, name: "Music"},
+  {id: 9648, name: "Mystery"},
+  {id: 10749, name: "Romance"},
+  {id: 878, name: "Science Fiction"},
+  {id: 10770, name: "TV Movie"},
+  {id: 53, name: "Thriller"},
+  {id: 10752, name: "War"},
+  {id: 37, name: "Western"},
+]
+
 const SearchPresenter = ({
   movieResults,
   moviePage,
@@ -85,6 +144,26 @@ const SearchPresenter = ({
         onChange={updateTerm}
       />
     </Form>
+    {!searchTerm && !movieResults && !tvResults && (
+      <GenreContainer>
+        <span>Movie : </span>
+        {movieGenres.map(g => (
+          <Link to={`/movie/genre/${g.id}`}>
+            <Button>{g.name}</Button>
+          </Link>
+        ))}
+      </GenreContainer>
+    )}
+    {!searchTerm && !movieResults && !tvResults && (
+      <GenreContainer>
+        <span>Tv : </span>
+        {tvGenres.map(g => (
+          <Link to={`/tv/genre/${g.id}`}>
+            <Button>{g.name}</Button>
+          </Link>
+        ))}
+      </GenreContainer>
+    )}
     {loading ? (
       <Loader />
     ) : (

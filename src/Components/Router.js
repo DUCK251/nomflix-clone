@@ -12,6 +12,7 @@ import Header from "Components/Header";
 import Search from "Routes/Search";
 import Detail from "Routes/Detail";
 import Collection from "Routes/Collection";
+import Genre from "Routes/Genre";
 
 const Router = () => (
   <BrowserRouter forceRefresh>
@@ -19,10 +20,12 @@ const Router = () => (
       <Header />
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/tv" component={TV} />
+        <Route exact path="/tv" component={TV} />
         <Route path="/search" component={Search} />
         <Route path="/favs" component={Favs} />
-        <Route path="/movie/:id" component={Detail} />
+        <Route exact path="/movie/:id" component={Detail} />
+        <Route exact path="/movie/genre/:id" component={Genre} />
+        <Route exact path="/tv/genre/:id" component={Genre} />
         <Route path="/collection/:id" component={Collection} />
         <Route exact path="/show/:id" component={Detail} />
         <Redirect from="*" to="/" />
